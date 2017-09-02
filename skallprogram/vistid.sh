@@ -7,6 +7,15 @@ if [ ! -f $FILE ]; then
    exit 0
 fi
 
-while read line; do
-   echo "$line"
-done < $FILE
+echo "Hva er hendelsen?"
+read hendelse
+
+hendelser=$(cut -f 1 $FILE)
+
+for h in $hendelser
+do
+   if [ "$hendelse" = "$h" ]; then
+     echo "Hei"
+   fi
+
+done
