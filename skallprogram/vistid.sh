@@ -10,12 +10,19 @@ fi
 echo "Hva er hendelsen?"
 read hendelse
 
-hendelser=$(cut -f 1 $FILE)
+regexp="$hendelse."
 
-for h in $hendelser
-do
-   if [ "$hendelse" = "$h" ]; then
-     echo "Hei"
-   fi
+hendelser=$(cut -f 1-2  $FILE)
 
-done
+declare -i sum=0
+
+cat $FILE | (while read line
+   do
+      if [[ $line =~ $regexp ]]
+      then
+         ((sum+=$(echo "$line" | cut -f2)))
+      fi
+   done
+   echo "$sum"
+)
+
