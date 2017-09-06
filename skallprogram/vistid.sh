@@ -26,3 +26,4 @@ cat $FILE | (while read line
    echo "$sum"
 )
 
+exit 0
