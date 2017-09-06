@@ -1,31 +1,33 @@
-TIME=$1
-FILE=$2
-RUNNING=1
-MD5="0"
+#! /bin/bash
 
-if [ -f $FILE ]; then
-	MD5=$(md5sum $FILE)
-fi
+if [ -a $1 ];
+then
+   #While løkke for å monitorere
+   GMLFIL=$(stat $1 -c%Y)
 
-while [ $RUNNING -eq 1 ];
-do
-	sleep $TIME
-	#Checking if file has been created
-	if [ "$MD5" = "0" ]; then
-		if [ -f $FILE ]; then
-			echo "Filen $FILE ble opprettet."
-		fi
-	#File exists, doing checks of editing and deletion here
-	#Checking if file has been deleted
-	if [ ! -f $FILE ]; then
-		echo "Filen $FILE ble slettet."
-		continue;
-	fi
-	#Checking if file has been edited
-	if [[ $(md5sum $FILE) != $MD5 ]]; then
-		echo "Filen $FILE ble endret."
-		RUNNING=0;
-	fi
+   while true
+   do
+      sleep $2
+      #Sjekk om filen er slettet
+      if [ ! -f $1 ];
+      then
+         echo "Filen $1 er slettet"
+         exit 0
+      else
+         #Sjekk om filen er blitt endret
+         NYFIL=$(stat $1 -c%Y)
+         if [[ $GMLFIL != $NYFIL ]];
+            then echo "Filen $1 er endret siden forrige kontroll"
+            exit 0
+         fi
+      fi
+   done
+else
+   #While løkke for å sjekk om filen blir opprettet exit 0
+   while [ ! -f $1 ];
+   do
+      sleep $2
+   done
 fi
-done
-exit 0
+echo "Filen $1 er opprettet"
+
