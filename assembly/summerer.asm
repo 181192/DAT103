@@ -59,17 +59,34 @@ skrivsiffer:
 	push ebx
 	push ecx
 	push edx
-	add ecx,'0' ; converter tall til ascii.
-	mov [siffer],ecx
-	mov ecx,siffer
-	mov edx,1
-	mov ebx,STDOUT
-	mov eax,SYS_WRITE
+
+	mov edx, 0
+	mov eax, ecx
+	mov ebx, 10
+	div ebx
+	push edx
+	add eax, '0'
+	mov [siffer], eax
+	mov ecx, siffer
+	mov edx, 1
+	mov ebx, STDOUT
+	mov eax, SYS_WRITE
 	int 80h
+
+	pop ecx
+	add ecx, '0'
+	mov [siffer], ecx
+	mov ecx, siffer
+	mov edx, 1
+	mov ebx, STDOUT
+	mov eax, SYS_WRITE
+	int 80h
+
 	pop edx
 	pop ecx
 	pop ebx
 	pop eax
+	call nylinje
 	ret
 ; ---------------------------------------------------------
 lessiffer:
