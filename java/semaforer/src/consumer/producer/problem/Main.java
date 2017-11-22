@@ -1,3 +1,5 @@
+package consumer.producer.problem;
+
 import java.util.concurrent.Semaphore;
 
 public class Main {

@@ -1,10 +1,12 @@
+package consumer.producer.problem;
+
 import java.util.concurrent.Semaphore;
 
-public class Konsument implements Runnable {
+public class Produsent implements Runnable {
     private Semaphore semProdusent;
     private Semaphore semKonsument;
 
-    Konsument(Semaphore semProdusent, Semaphore semKonsument) {
+    Produsent(Semaphore semProdusent, Semaphore semKonsument) {
         this.semProdusent = semProdusent;
         this.semKonsument = semKonsument;
     }
@@ -24,12 +26,13 @@ public class Konsument implements Runnable {
 //        } while (true);
         for (int i = 0; i < 5; i++) {
             try {
-                semKonsument.acquire();
-                System.out.println("Konsument: " + i);
-                semProdusent.release();
+                semProdusent.acquire();
+                System.out.println("consumer.producer.problem.Produsent: " + i);
+                semKonsument.release();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
     }
+
 }
