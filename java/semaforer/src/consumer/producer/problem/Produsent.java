@@ -1,38 +1,18 @@
 package consumer.producer.problem;
 
-import java.util.concurrent.Semaphore;
+import static consumer.producer.problem.Main.P_RUNDER;
 
 public class Produsent implements Runnable {
-    private Semaphore semProdusent;
-    private Semaphore semKonsument;
+    private Buffer buffer;
 
-    Produsent(Semaphore semProdusent, Semaphore semKonsument) {
-        this.semProdusent = semProdusent;
-        this.semKonsument = semKonsument;
+    Produsent(Buffer buffer) {
+        this.buffer = buffer;
     }
 
     @Override
     public void run() {
-//        do {
-//
-//            /* produce an item in next_produced */
-//            // wait(empty);
-//            // wait(mutex);
-//
-//            /* add next produced to the buffer */
-//            // signal(mutex);
-//            // signal(full);
-//
-//        } while (true);
-        for (int i = 0; i < 5; i++) {
-            try {
-                semProdusent.acquire();
-                System.out.println("consumer.producer.problem.Produsent: " + i);
-                semKonsument.release();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        for (int i = 0; i < P_RUNDER; i++) {
+            buffer.produser(i);
         }
     }
-
 }

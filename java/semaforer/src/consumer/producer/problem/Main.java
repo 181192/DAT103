@@ -1,21 +1,37 @@
 package consumer.producer.problem;
 
-import java.util.concurrent.Semaphore;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
+    private static final int ANTALL = 10;
+    static final int K_RUNDER = 10;
+    static final int P_RUNDER = K_RUNDER * ANTALL;
 
     public static void main(String[] args) {
-        Semaphore semProdusent = new Semaphore(1);
-        Semaphore semKonsument = new Semaphore(0);
+        Buffer buffer = new Buffer();
+        List<Thread> threads = new ArrayList<>();
 
-        Produsent produsent = new Produsent(semProdusent, semKonsument);
-        Konsument konsument = new Konsument(semProdusent, semKonsument);
+        Thread p = new Thread(new Produsent(buffer), "ProdusentThread  ");
+        p.start();
+        threads.add(p);
 
-        Thread produsentThread = new Thread(produsent, "ProdusentThread");
-        Thread konsumentThread = new Thread(konsument, "KonsumentThread");
+        int n = 0;
+        while (n < ANTALL) {
+            Thread k = new Thread(new Konsument(buffer), "KonsumentThread " + n++);
+            threads.add(k);
+            k.start();
+        }
 
-        produsentThread.start();
-        konsumentThread.start();
+        n = 0;
+        while (n < ANTALL) {
+            try {
+                threads.get(n++).join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println("Antallet i bufferen er: " + buffer.antall() + " og bufferen er tom? " + buffer.erTom());
     }
 }
 
