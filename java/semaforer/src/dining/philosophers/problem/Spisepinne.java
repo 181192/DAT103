@@ -2,8 +2,13 @@ package dining.philosophers.problem;
 
 import java.util.concurrent.Semaphore;
 
-public class Spisepinne {
+class Spisepinne {
     private Semaphore semafor = new Semaphore(1);
+    private int nummer;
+
+    Spisepinne(int nummer) {
+        this.nummer = nummer;
+    }
 
     void ta() {
         try {
@@ -17,7 +22,11 @@ public class Spisepinne {
         semafor.release();
     }
 
-    public boolean erLedig() {
+    boolean erLedig() {
         return semafor.availablePermits() > 0;
+    }
+
+    int getNummer() {
+        return nummer;
     }
 }

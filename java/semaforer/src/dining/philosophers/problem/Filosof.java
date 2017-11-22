@@ -7,15 +7,14 @@ public class Filosof implements Runnable {
     private Spisepinne venstrepinne;
     private Spisepinne hogrepinne;
 
-    Filosof(int nummer, Spisepinne venstrepinne, Spisepinne hogrepinne) {
+    Filosof(int nummer) {
         this.nummer = nummer;
-        this.venstrepinne = venstrepinne;
-        this.hogrepinne = hogrepinne;
     }
 
-    public void run(){
+    @Override
+    @SuppressWarnings("InfiniteLoopStatement") // Intellij klager
+    public void run() {
         System.out.println("Hei, jeg er filosof nummer " + nummer);
-
         do {
             venstrepinne.ta();
             System.out.println("Filosof nummer " + nummer + " tar venstre spisepinne");
@@ -26,17 +25,47 @@ public class Filosof implements Runnable {
             System.out.println("Filosof nummer " + nummer + " slipper venstre spisepinne");
             hogrepinne.slipp();
             System.out.println("Filosof nummer " + nummer + " slipper hogre spisepinne");
+            tenk();
         } while (true);
     }
 
     private void spis() {
         try {
-            int sleepTime = ThreadLocalRandom.current().nextInt(0, 1000);
+            int sleepTime = ThreadLocalRandom.current().nextInt(0, 500);
             System.out.println("Filosof nummer " + nummer + " spiser for " + sleepTime);
             Thread.sleep(sleepTime);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace(System.out);
         }
+    }
+
+    private void tenk() {
+        try {
+            int sleepTime = ThreadLocalRandom.current().nextInt(0, 1000);
+            System.out.println("Filosof nummer " + nummer + " tenker for " + sleepTime);
+            Thread.sleep(sleepTime);
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+    }
+
+    Spisepinne getVenstrepinne() {
+        return venstrepinne;
+    }
+
+    void setVenstrepinne(Spisepinne venstrepinne) {
+        this.venstrepinne = venstrepinne;
+    }
+
+    Spisepinne getHogrepinne() {
+        return hogrepinne;
+    }
+
+    void setHogrepinne(Spisepinne hogrepinne) {
+        this.hogrepinne = hogrepinne;
+    }
+
+    int getNummer() {
+        return nummer;
     }
 }
