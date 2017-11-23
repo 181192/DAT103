@@ -1,22 +1,27 @@
 package readers.writers.problem;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Semaphore;
 
 class Main {
-    public static int readCount = 0;
+    private static final int ANTALL = 10;
     public static void main(String[] args) throws Exception {
-        Semaphore readLock = new Semaphore(1);
-        Semaphore writeLock = new Semaphore(1);
-
-        Skriver skriver = new Skriver(readLock, writeLock);
-        Leser leser = new Leser(readLock, writeLock, 0);
-        Thread t1 = new Thread(leser, "thread1");
-        Thread t2 = new Thread(leser, "thread2");
-        Thread t3 = new Thread(skriver, "thread3");
-        Thread t4 = new Thread(skriver, "thread4");
-        t1.start();
-        t3.start();
-        t2.start();
-        t4.start();
+        int readCount = 0;
+        Semaphore semLeser = new Semaphore(ANTALL);
+        Semaphore semSkriver = new Semaphore(1);
+        List<Thread> threads = new ArrayList<>();
+        int n = 0;
+        while (n < ANTALL) {
+            Thread leser = new Thread(new Leser(semLeser,semSkriver, readCount), "Leser-tråd " + n);
+            Thread skriver = new Thread(new Skriver(semSkriver), "Skriver-tråd " + n);
+            threads.add(skriver);
+            threads.add(leser);
+            n++;
+        }
+        n = 0;
+        while(n < threads.size()) {
+           threads.get(n++).start();
+        }
     }
 }
