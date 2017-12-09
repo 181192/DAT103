@@ -1,7 +1,7 @@
 package dining.philosophers.problem;
 
 public class Main {
-    private static int antall = 10;
+    private static int antall = 5;
     private static Filosof filosofer[] = new Filosof[antall];
     public static void main(String argv[]) {
         Kelner kelner = new Kelner(antall);
