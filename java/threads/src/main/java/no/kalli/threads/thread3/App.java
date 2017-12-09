@@ -1,4 +1,4 @@
-package no.kalli.part1.thread3;
+package no.kalli.threads.thread3;
 
 public class App {
     public static void main(String[] args) {

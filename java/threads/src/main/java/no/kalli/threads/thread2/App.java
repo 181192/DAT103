@@ -1,4 +1,4 @@
-package no.kalli.part1.thread2;
+package no.kalli.threads.thread2;
 
 class Runner implements Runnable {
     public void run() {

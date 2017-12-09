@@ -1,4 +1,4 @@
-package no.kalli.part1.thread1;
+package no.kalli.threads.thread1;
 
 class Runner extends Thread {
     @Override
