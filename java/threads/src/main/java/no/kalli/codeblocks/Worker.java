@@ -1,4 +1,4 @@
-package no.kalli.part4;
+package no.kalli.codeblocks;
 
 import java.util.ArrayList;
 import java.util.List;

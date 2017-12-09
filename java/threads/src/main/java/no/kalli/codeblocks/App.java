@@ -1,4 +1,4 @@
-package no.kalli.part4;
+package no.kalli.codeblocks;
 
 public class App {
     public static void main(String[] args) {
