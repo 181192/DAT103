@@ -1,4 +1,4 @@
-package no.kalli.part2;
+package no.kalli.volatiles;
 
 import java.util.Scanner;
 
