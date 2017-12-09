@@ -1,8 +1,10 @@
-package no.kalli.reentrantlocks;
+package no.kalli.locks.reentrantlocks;
+
+import no.kalli.locks.IRunner;
 
 public class App {
     public static void main(String[] args) {
-        final Runner runner = new Runner();
+        final IRunner runner = new RLRunner();
         Thread t1 = new Thread(new Runnable() {
             public void run() {
                 try {
