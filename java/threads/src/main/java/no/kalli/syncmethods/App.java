@@ -1,4 +1,4 @@
-package no.kalli.part3;
+package no.kalli.syncmethods;
 
 public class App {
 
